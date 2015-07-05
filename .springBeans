@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beansProjectDescription>
+	<version>1</version>
+	<pluginVersion><![CDATA[3.6.3.201411271034-RELEASE]]></pluginVersion>
+	<configSuffixes>
+		<configSuffix><![CDATA[xml]]></configSuffix>
+	</configSuffixes>
+	<enableImports><![CDATA[false]]></enableImports>
+	<configs>
+		<config>WebContent/WEB-INF/smartsence-servlet.xml</config>
+		<config>src/com/ori/apps/web/spring/smartsence/configxml/dao-context.xml</config>
+		<config>src/com/ori/apps/web/spring/smartsence/configxml/service-context.xml</config>
+		<config>src/com/ori/apps/web/spring/smartsence/configxml/security-context.xml</config>
+	</configs>
+	<autoconfigs>
+	</autoconfigs>
+	<configSets>
+	</configSets>
+</beansProjectDescription>

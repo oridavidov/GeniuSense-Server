@@ -1,0 +1,38 @@
+@CHARSET "ISO-8859-1";
+
+.logintable {
+	width:	 200px;
+	padding: 10px;
+	border:  1px solid blue;	
+}
+
+.label {
+	text-align:     right;
+	vertical-align: top;
+}
+
+.error {
+	font-size:   small;
+	color:       red;
+	margin-left: 10px;
+}
+
+.valid {
+	font-size:   small;
+	color:       green	;
+	margin-left: 10px;
+}
+
+.datatable {
+	padding: 10px;
+	border:  1px solid blue;
+}
+
+input[name=email] {
+	width: 		  170px;
+	margin-left:  10px;
+}
+input[type=password] {
+	width: 		  100px;
+	margin-left:  10px;
+}
