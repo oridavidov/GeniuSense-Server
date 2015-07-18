@@ -1,19 +1,19 @@
 package com.ori.apps.web.spring.smartsence.dao;
 
 import java.sql.Date;
+import java.util.Arrays;
 
 
 public class DataTick {
 
-	private String msgType;
-	private String unitId;
-	private String unitType;
-	private long   time;
-    private double temperature1;
-    private double temperature2;
-	private double humidity1;
-	private double humidity2;
-	private double light;
+	private String   msgType;
+	private String   unitId;
+	private String   unitType;
+	private long     time;
+    private double[] temperature;
+    private double[] humidity;
+	private double[] ph;
+	private int[]    light;
 		
 	
 	public DataTick() {		
@@ -23,6 +23,29 @@ public class DataTick {
 		this.msgType = "TIME_REQUEST";
 		this.time = unixTime;
 	}
+	
+	public DataTick(String msgType, String unitId, String unitType, long time,
+			double[] temperature, double[] humidity, double[] ph, int[] light) {
+		super();
+		this.msgType = msgType;
+		this.unitId = unitId;
+		this.unitType = unitType;
+		this.time = time;
+		this.temperature = temperature;
+		this.humidity = humidity;
+		this.ph = ph;
+		this.light = light;
+	}
+	
+	@Override
+	public String toString() {
+		return "DataTick [msgType=" + msgType + ", unitId=" + unitId
+				+ ", unitType=" + unitType + ", time=" + time
+				+ ", temperature=" + Arrays.toString(temperature)
+				+ ", humidity=" + Arrays.toString(humidity) + ", ph="
+				+ Arrays.toString(ph) + ", light=" + Arrays.toString(light)
+				+ "]";
+	}	
 
 	public String getMsgType() {
 		return msgType;
@@ -31,29 +54,6 @@ public class DataTick {
 	public void setMsgType(String msgType) {
 		this.msgType = msgType;
 	}
-
-	public DataTick(String unitId, String unitType, double temperature1,
-			double temperature2, double humidity1, double humidity2,
-			double light, long time) {
-		super();
-		this.unitId = unitId;
-		this.unitType = unitType;
-		this.temperature1 = temperature1;
-		this.temperature2 = temperature2;
-		this.humidity1 = humidity1;
-		this.humidity2 = humidity2;
-		this.light = light;
-		this.time = time;
-	}
-	
-	@Override
-	public String toString() {
-		return "DataTick [unitId=" + unitId + ", unitType=" + unitType
-				+ ", temperature1=" + temperature1 + ", temperature2="
-				+ temperature2 + ", humidity1=" + humidity1 + ", humidity2="
-				+ humidity2 + ", light=" + light + ", time=" + time + "]";
-	}
-
 	
 	public String getUnitId() {
 		return unitId;
@@ -71,53 +71,45 @@ public class DataTick {
 		this.unitType = unitType;
 	}
 
-	public double getTemperature1() {
-		return temperature1;
+	public double[] getTemperature() {
+		return temperature;
 	}
 
-	public void setTemperature1(double temperature1) {
-		this.temperature1 = temperature1;
+	public void setTemperature(double[] temperature) {
+		this.temperature = temperature;
 	}
 
-	public double getTemperature2() {
-		return temperature2;
+	public double[] getHumidity() {
+		return humidity;
 	}
 
-	public void setTemperature2(double temperature2) {
-		this.temperature2 = temperature2;
-	}
-
-	public double getHumidity1() {
-		return humidity1;
-	}
-
-	public void setHumidity1(double humidity1) {
-		this.humidity1 = humidity1;
-	}
-
-	public double getHumidity2() {
-		return humidity2;
-	}
-
-	public void setHumidity2(double humidity2) {
-		this.humidity2 = humidity2;
+	public void setHumidity(double[] humidity) {
+		this.humidity = humidity;
 	}
 
 	
-	public double getLight() {
-		return light;
-	}
-
-	public void setLight(double light) {
-		this.light = light;
-	}
-
 	public long getTime() {
 		return time;
 	}
 
 	public void setTime(long time) {
 		this.time = time;
+	}
+
+	public double[] getPh() {
+		return ph;
+	}
+
+	public void setPh(double[] ph) {
+		this.ph = ph;
+	}
+
+	public int[] getLight() {
+		return light;
+	}
+
+	public void setLight(int[] light) {
+		this.light = light;
 	}	
 	
 }

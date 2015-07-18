@@ -2,6 +2,7 @@ package com.ori.apps.web.spring.smartsence.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -49,8 +50,8 @@ public class DataTickDAO {
 
 				//dataTick.setTemperature(rs.getDouble("temperature"));
 				//dataTick.setHumidity(rs.getDouble("humidity"));
-				dataTick.setLight(rs.getDouble("light"));
-				dataTick.setTime(rs.getLong("time"));				
+				//dataTick.setLight(rs.getDouble("light"));
+				//dataTick.setTime(rs.getLong("time"));				
 
 				return dataTick;
 			}
@@ -66,8 +67,8 @@ public class DataTickDAO {
 
 				//dataTick.setTemperature(rs.getDouble("temperature"));
 				//dataTick.setHumidity(rs.getDouble("humidity"));
-				dataTick.setLight(rs.getDouble("light"));
-				dataTick.setTime(rs.getLong("time"));				
+				//dataTick.setLight(rs.getDouble("light"));
+				//dataTick.setTime(rs.getLong("time"));				
 
 				return dataTick;
 			}
@@ -81,17 +82,34 @@ public class DataTickDAO {
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		 
 		params.addValue("unitId"      , dt.getUnitId());
-		params.addValue("unitType"    , dt.getUnitType());
 		params.addValue("time"        , dt.getTime());
-		params.addValue("temperature1", dt.getTemperature1());
-		params.addValue("temperature2", dt.getTemperature2());
-		params.addValue("humidity1"   , dt.getHumidity1());
-		params.addValue("humidity2"   , dt.getHumidity2());
-		params.addValue("light"       , dt.getLight());
-		
-		return jdbc.update("insert into "+dt.getUnitId()+" (time, temperature1, temperature2,"
-							+ " humidity1, humidity2, light) values (:time, :temperature1, "
-							+ ":temperature2, :humidity1, :humidity2, :light)", params); 		
+		switch (dt.getUnitType()) {
+			case "A": {
+				for (int i=0; i<4; i++) {
+					params.addValue("temperature"+(i+1), (dt.getTemperature())[i]);
+				}				
+				for (int i=0; i<4; i++) {
+					params.addValue("humidity"+(i+1), (dt.getHumidity())[i]);
+				}				
+				for (int i=0; i<2; i++) {
+					params.addValue("light"+(i+1), (dt.getLight())[i]);
+				}
+				for (int i=0; i<1; i++) {
+					params.addValue("ph"+(i+1), (dt.getPh())[i]);
+				}
+				
+				return jdbc. update("insert into "+dt.getUnitId()+" (time, temperature1, temperature2,"
+						+ " temperature3, temperature4, humidity1, humidity2, humidity3, humidity4,"
+						+ " light1, light2, ph1) values (:time, :temperature1, :temperature2,"
+						+ ":temperature3, :temperature4, :humidity1, :humidity2, :humidity3,"
+						+ ":humidity4, :light1, :light2, :ph1)", params); 
+			}	
+			
+			default: {
+				System.out.println("got unknown unit type");
+				return 0;
+			}
+		}			
 		
 	}
 

@@ -107,7 +107,7 @@ public class LoginController {
 
 	@RequestMapping(value = "/getCurrentTime", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	Map<String, Object> getCurrentTime() {
+	DataTick getCurrentTime() {
 		System.out.println("got get request");
 		long unixTime = System.currentTimeMillis() / 1000L;
 
@@ -117,7 +117,7 @@ public class LoginController {
 		data.put("time", time);
 
 		System.out.println("got time request: " + data);
-		return data;
+		return time;
 	}
 
 	/*
@@ -134,20 +134,21 @@ public class LoginController {
 	@ResponseBody
 	public Map<String, Object> getData(@RequestBody DataTick datatick,
 			Principal principal) {
-
+		
 		if (datatick != null) {
+					
 			if (datatick.getMsgType().equals("DATA_TICK")) {
 				System.out.println("got dataTick: " + datatick);
+				
 				if (dataTickService.isUnitRegister(datatick.getUnitId())) {
-					System.out.println("unit is exist");
-					System.out.println(dataTickService.addDataTick(datatick)
-							+ " row added");
+					System.out.println("unit is registered");
+					System.out.println(dataTickService.addDataTick(datatick) + " row added");
 				} else {
-					System.out.println("unit is not exist");
+					System.out.println("unit is not registered");
 				}
 			}
 			else {
-				System.out.println("got unknows msg type");
+				System.out.println("got unknown msg type: "+datatick.getMsgType());
 			}
 		}
 		 else {
@@ -163,7 +164,7 @@ public class LoginController {
 		// String name = principal.getName();
 
 		ticks = new ArrayList<DataTick>();
-		ticks.add(new DataTick("a1b222", "A", 25.1, 25.2, 60, 60.6, 127, 111111));
+		//ticks.add(new DataTick("a1b222", "A", 25.1, 25.2, 60, 60.6, 127, 111111));
 		// ticks.add(new DataTick(36.6, 61.0, 125, null));
 		// ticks.add(new DataTick(37.7, 62.0, 124, null));
 

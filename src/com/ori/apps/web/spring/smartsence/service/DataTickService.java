@@ -27,6 +27,7 @@ public class DataTickService {
 	}
 	
 	public int addDataTick(DataTick dt) {
+		//  validate data
 		return dataTickDao.addDataTick(dt);
 	}
 
