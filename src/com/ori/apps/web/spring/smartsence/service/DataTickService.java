@@ -26,9 +26,14 @@ public class DataTickService {
 		return dataTickDao.getLastData();
 	}
 	
-	public int addDataTick(DataTick dt) {
+	public boolean addDataTick(DataTick dt) {
 		//  validate data
-		return dataTickDao.addDataTick(dt);
+		if (dataTickDao.addDataTick(dt) == 1) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public List<DataTick> throwTestExeption() {
