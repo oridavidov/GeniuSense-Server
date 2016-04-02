@@ -77,40 +77,53 @@ public class DataTickDAO {
 		
 	}
 
-	public int addDataTick(DataTick dt) {
-		
+	public int addDataTick(DataTick dt) {		
 		MapSqlParameterSource params = new MapSqlParameterSource();
+		String query;
 		 
-		params.addValue("unitId"      , dt.getUnitId());
-		params.addValue("time"        , dt.getTime());
-		switch (dt.getUnitType()) {
-			case "A": {
-				for (int i=0; i<4; i++) {
-					params.addValue("temperature"+(i+1), (dt.getTemperature())[i]);
-				}				
-				for (int i=0; i<4; i++) {
-					params.addValue("humidity"+(i+1), (dt.getHumidity())[i]);
-				}				
-				for (int i=0; i<2; i++) {
-					params.addValue("light"+(i+1), (dt.getLight())[i]);
-				}
-				for (int i=0; i<1; i++) {
-					params.addValue("ph"+(i+1), (dt.getPh())[i]);
-				}
-				
-				return jdbc. update("insert into "+dt.getUnitId()+" (time, temperature1, temperature2,"
-						+ " temperature3, temperature4, humidity1, humidity2, humidity3, humidity4,"
-						+ " light1, light2, ph1) values (:time, :temperature1, :temperature2,"
-						+ ":temperature3, :temperature4, :humidity1, :humidity2, :humidity3,"
-						+ ":humidity4, :light1, :light2, :ph1)", params); 
-			}	
-			
-			default: {
-				System.out.println("got unknown unit type");
-				return 0;
-			}
-		}			
+		params.addValue("time", dt.getTime());
 		
+		for (int i=0; i<dt.getTemperature().length; i++) {
+			params.addValue("temperature"+(i+1), (dt.getTemperature())[i]);
+		}				
+		for (int i=0; i<dt.getHumidity().length; i++) {
+			params.addValue("humidity"+(i+1), (dt.getHumidity())[i]);
+		}				
+		for (int i=0; i<dt.getLight().length; i++) {
+			params.addValue("light"+(i+1), (dt.getLight())[i]);
+		}
+		for (int i=0; i<dt.getPh().length; i++) {
+			params.addValue("ph"+(i+1), (dt.getPh())[i]);
+		}
+		query = "insert into data" + dt.getUnitId() + " (time, ";
+		for (int i=0; i<dt.getTemperature().length; i++) {
+			query.concat("temperature" + (i+1) + ",");
+		}
+		for (int i=0; i<dt.getHumidity().length; i++) {
+			query.concat("humidity" + (i+1) + ",");
+		}
+		for (int i=0; i<dt.getLight().length; i++) {
+			query.concat("light" + (i+1) + ",");
+		}
+		for (int i=0; i<dt.getPh().length; i++) {
+			query.concat("ph" + (i+1) + ",");
+		}
+		query.concat(" values (time, ");
+		
+		for (int i=0; i<dt.getTemperature().length; i++) {
+			query.concat(":temperature" + (i+1) + ",");
+		}
+		for (int i=0; i<dt.getHumidity().length; i++) {
+			query.concat(":humidity" + (i+1) + ",");
+		}
+		for (int i=0; i<dt.getLight().length; i++) {
+			query.concat(":light" + (i+1) + ",");
+		}
+		for (int i=0; i<dt.getPh().length; i++) {
+			query.concat(":ph" + (i+1) + ",");
+		}
+				
+		return jdbc. update(query, params); 		
 	}
 
 	public boolean isUnitRegister(String unitId) {

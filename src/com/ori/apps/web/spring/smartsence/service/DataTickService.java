@@ -17,6 +17,8 @@ public class DataTickService {
 	public void setDataTickDao(DataTickDAO dataTickDao) {
 		this.dataTickDao = dataTickDao;
 	}
+	
+	
 
 	public List<DataTick> getAllDataTicks() {		
 		return dataTickDao.getAllData();
@@ -25,9 +27,9 @@ public class DataTickService {
 	public List<DataTick> getLastDataTicks() {
 		return dataTickDao.getLastData();
 	}
-	
+
 	public boolean addDataTick(DataTick dt) {
-		//  validate data
+		
 		if (dataTickDao.addDataTick(dt) == 1) {
 			return true;
 		}

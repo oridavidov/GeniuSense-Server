@@ -1,33 +1,39 @@
 package com.ori.apps.web.spring.smartsence.dao;
 
-import java.sql.Date;
 import java.util.Arrays;
 
+import javax.validation.constraints.NotNull;
 
 public class DataTick {
-
-	private String   msgType;
-	private String   unitId;
-	private String   unitType;
-	private long     time;
+	
+	@NotNull
+	private String unitId;
+	@NotNull
+	private String unitType;
+	@NotNull
+	private long   time;
+	
     private double[] temperature;
     private double[] humidity;
 	private double[] ph;
-	private int[]    light;
+	private double[] light;
+	@NotNull
+	private int    errorCode;
 		
 	
 	public DataTick() {		
 	}
 	
 	public DataTick(long unixTime) {
-		this.msgType = "TIME_REQUEST";
+		
 		this.time = unixTime;
-	}
+	}	
 	
+		
 	public DataTick(String msgType, String unitId, String unitType, long time,
-			double[] temperature, double[] humidity, double[] ph, int[] light) {
+			double[] temperature, double[] humidity, double[] ph,
+			double[] light, int errorCode) {
 		super();
-		this.msgType = msgType;
 		this.unitId = unitId;
 		this.unitType = unitType;
 		this.time = time;
@@ -35,25 +41,20 @@ public class DataTick {
 		this.humidity = humidity;
 		this.ph = ph;
 		this.light = light;
+		this.errorCode = errorCode;
 	}
+
 	
 	@Override
 	public String toString() {
-		return "DataTick [msgType=" + msgType + ", unitId=" + unitId
+		return "DataTick [unitId=" + unitId
 				+ ", unitType=" + unitType + ", time=" + time
 				+ ", temperature=" + Arrays.toString(temperature)
 				+ ", humidity=" + Arrays.toString(humidity) + ", ph="
 				+ Arrays.toString(ph) + ", light=" + Arrays.toString(light)
-				+ "]";
-	}	
-
-	public String getMsgType() {
-		return msgType;
+				+ ", errorCode=" + errorCode + "]";
 	}
 
-	public void setMsgType(String msgType) {
-		this.msgType = msgType;
-	}
 	
 	public String getUnitId() {
 		return unitId;
@@ -69,6 +70,14 @@ public class DataTick {
 
 	public void setUnitType(String unitType) {
 		this.unitType = unitType;
+	}
+
+	public long getTime() {
+		return time;
+	}
+
+	public void setTime(long time) {
+		this.time = time;
 	}
 
 	public double[] getTemperature() {
@@ -87,15 +96,6 @@ public class DataTick {
 		this.humidity = humidity;
 	}
 
-	
-	public long getTime() {
-		return time;
-	}
-
-	public void setTime(long time) {
-		this.time = time;
-	}
-
 	public double[] getPh() {
 		return ph;
 	}
@@ -104,12 +104,21 @@ public class DataTick {
 		this.ph = ph;
 	}
 
-	public int[] getLight() {
+	public double[] getLight() {
 		return light;
 	}
 
-	public void setLight(int[] light) {
+	public void setLight(double[] light) {
 		this.light = light;
-	}	
-	
+	}
+
+	public int getErrorCode() {
+		return errorCode;
+	}
+
+	public void setErrorCode(int errorCode) {
+		this.errorCode = errorCode;
+	}
+
+		
 }

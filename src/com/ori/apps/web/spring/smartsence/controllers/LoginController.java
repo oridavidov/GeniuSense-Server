@@ -136,7 +136,7 @@ public class LoginController {
 			Principal principal) {
 		
 		if (datatick != null) {
-					
+			/*		
 			if (datatick.getMsgType().equals("DATA_TICK")) {
 				System.out.println("got dataTick: " + datatick);
 				
@@ -148,8 +148,9 @@ public class LoginController {
 				}
 			}
 			else {
-				System.out.println("got unknown msg type: "+datatick.getMsgType());
+				//System.out.println("got unknown msg type: "+datatick.getMsgType());
 			}
+			*/
 		}
 		 else {
 			System.out.println("got null or unkdataTick object");
