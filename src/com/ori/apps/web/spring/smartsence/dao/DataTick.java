@@ -8,7 +8,6 @@ public class DataTick {
 	
 	@NotNull
 	private String unitId;
-	@NotNull
 	private String unitType;
 	@NotNull
 	private long   time;

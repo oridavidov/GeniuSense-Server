@@ -82,51 +82,92 @@ public class DataTickDAO {
 		String query;
 		 
 		params.addValue("time", dt.getTime());
+		params.addValue("errorcode", dt.getErrorCode());
 		
-		for (int i=0; i<dt.getTemperature().length; i++) {
-			params.addValue("temperature"+(i+1), (dt.getTemperature())[i]);
-		}				
-		for (int i=0; i<dt.getHumidity().length; i++) {
-			params.addValue("humidity"+(i+1), (dt.getHumidity())[i]);
-		}				
-		for (int i=0; i<dt.getLight().length; i++) {
-			params.addValue("light"+(i+1), (dt.getLight())[i]);
+		if (dt.getTemperature() != null) {
+			for (int i=0; i<dt.getTemperature().length; i++) {
+				params.addValue("temperature"+(i+1), (dt.getTemperature())[i]);
+			}			
 		}
-		for (int i=0; i<dt.getPh().length; i++) {
-			params.addValue("ph"+(i+1), (dt.getPh())[i]);
-		}
-		query = "insert into data" + dt.getUnitId() + " (time, ";
-		for (int i=0; i<dt.getTemperature().length; i++) {
-			query.concat("temperature" + (i+1) + ",");
-		}
-		for (int i=0; i<dt.getHumidity().length; i++) {
-			query.concat("humidity" + (i+1) + ",");
-		}
-		for (int i=0; i<dt.getLight().length; i++) {
-			query.concat("light" + (i+1) + ",");
-		}
-		for (int i=0; i<dt.getPh().length; i++) {
-			query.concat("ph" + (i+1) + ",");
-		}
-		query.concat(" values (time, ");
 		
-		for (int i=0; i<dt.getTemperature().length; i++) {
-			query.concat(":temperature" + (i+1) + ",");
+		if (dt.getHumidity() != null) {
+			for (int i=0; i<dt.getHumidity().length; i++) {
+				params.addValue("humidity"+(i+1), (dt.getHumidity())[i]);
+			}			
 		}
-		for (int i=0; i<dt.getHumidity().length; i++) {
-			query.concat(":humidity" + (i+1) + ",");
+			
+		if (dt.getLight() != null) {
+			for (int i=0; i<dt.getLight().length; i++) {
+				params.addValue("light"+(i+1), (dt.getLight())[i]);
+			}
 		}
-		for (int i=0; i<dt.getLight().length; i++) {
-			query.concat(":light" + (i+1) + ",");
+		
+		if (dt.getPh() != null) {
+			for (int i=0; i<dt.getPh().length; i++) {
+				params.addValue("ph"+(i+1), (dt.getPh())[i]);
+			}
 		}
-		for (int i=0; i<dt.getPh().length; i++) {
-			query.concat(":ph" + (i+1) + ",");
+		
+		query = "insert into data" + dt.getUnitId() + " (time, errorcode";
+		
+		if (dt.getTemperature() != null) {
+			for (int i=0; i<dt.getTemperature().length; i++) {
+				query += ", temperature" + (i+1);
+			}
 		}
-				
-		return jdbc. update(query, params); 		
+		
+		if (dt.getHumidity() != null) {
+			for (int i=0; i<dt.getHumidity().length; i++) {
+				query += ", humidity" + (i+1);
+			}
+		}
+		
+		if (dt.getLight() != null) {
+			for (int i=0; i<dt.getLight().length; i++) {
+				query += ", light" + (i+1);
+			}		
+		}	
+		
+		if (dt.getPh() != null) {
+			for (int i=0; i<dt.getPh().length; i++) {
+				query += ", ph" + (i+1);
+			}
+		}
+		
+		query += ") values (:time, :errorcode";
+		
+		if (dt.getTemperature() != null) {
+			for (int i=0; i<dt.getTemperature().length; i++) {
+				query += ", :temperature" + (i+1);
+			}
+		}
+		
+		if (dt.getHumidity() != null) {
+			for (int i=0; i<dt.getHumidity().length; i++) {
+				query += ", :humidity" + (i+1);
+			}
+		}		
+		
+		if (dt.getLight() != null){
+			for (int i=0; i<dt.getLight().length; i++) {
+				query += ", :light" + (i+1);
+			}
+		}		
+		
+		if (dt.getPh() != null) {
+			for (int i=0; i<dt.getPh().length; i++) {
+				query += ", :ph" + (i+1);
+			}
+		}
+			
+		query += ")";
+		
+		System.out.println(query);
+		return jdbc.update(query, params); 		
 	}
 
 	public boolean isUnitRegister(String unitId) {
+		// todo - check if registered
 		return jdbc.queryForObject("SELECT count(*) from units where unit_id=:unit_id", new MapSqlParameterSource("unit_id", unitId), Integer.class) > 0;		
 	}
 	
